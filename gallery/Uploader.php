@@ -5,7 +5,7 @@ class Uploader
     public $upl;
 
     //3.1 В конструктор передается имя поля формы, от которого мы ожидаем загрузку файла
-    public function __construct( $upl )
+    public function __construct($upl)
     {
         $this->upl = $upl;
     }
@@ -21,17 +21,18 @@ class Uploader
                 }
             }
         }
+        return false;
     }
 
     //3.3 Метод upload() осуществляет перенос файла (если он был загружен!) из временного места в постоянное
     public function upload($path, $types)
     {
-        if ( true === $this->isUploaded() ) { //Проверка - был ли загружен файл
+        if ( $this->isUploaded() ) { //Проверка - был ли загружен файл
 
             $type = $_FILES[$this->upl]['type']; //Проверка удовлетворяет ли тип загружаемого файла списку разрешённых типов
 
-            if ( in_array( $type, $types ) ){
-                if ( file_exists( $path . $_FILES[$this->upl]['name'] ) ){ //Проверка наличия файла с таким же именем
+            if ( in_array( $type, $types ) ) {
+                if ( file_exists( $path . $_FILES[$this->upl]['name'] ) ) { //Проверка наличия файла с таким же именем
 
                     $i = 1;
                     //Пока файл с таким именем существует, добавляем к загружаемому файлу в начале имени число(сначала 1, если такой есть, то добавляем 2 и т.д.)
@@ -40,8 +41,7 @@ class Uploader
                         $i++;
                     }
                     $nf = $i . $_FILES[$this->upl]['name'];
-                }
-                else { //Иначе оставляем имя файла от пользователя
+                } else { //Иначе оставляем имя файла от пользователя
                     $nf = $_FILES[$this->upl]['name'];
                 }
 

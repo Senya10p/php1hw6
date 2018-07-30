@@ -2,21 +2,19 @@
 
 class TextFile      //2. Выносим часть функционала в родительский класс TextFile
 {
-    protected $data;    //защищённое свойство для хранения данных
-    public $way;
+    protected $data = [];    //защищённое свойство для хранения данных
+    public $path;
 
     /*1.1 В конструктор передается путь до файла с данными гостевой книги,
     в нём же происходит чтение данных из ней (используйте защищенное свойство объекта для хранения данных)*/
-    public function __construct( $way )
+    public function __construct($path)
     {
-        $this->way = $way;
+        $this->path = $path;
 
-        if ( is_readable($this->way) ){
-            $lines = file( $this->way, FILE_IGNORE_NEW_LINES );
+        if ( is_readable($this->path) ) {
+            $lines = file( $this->path, FILE_IGNORE_NEW_LINES );
             $this->data = $lines;
         }
-
-        $this->data =[];
     }
 
 
@@ -28,6 +26,6 @@ class TextFile      //2. Выносим часть функционала в р�
 
     public function save() //1.4 Метод save() сохраняет массив в файл
     {
-        file_put_contents( $this->way, implode( PHP_EOL, $this->data ) );
+        file_put_contents( $this->path, implode( PHP_EOL, $this->data ) );
     }
 }
